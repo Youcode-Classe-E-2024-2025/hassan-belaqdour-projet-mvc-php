@@ -3,9 +3,9 @@
 class Database
 {
     private $host = 'localhost';
-    private $db_name = 'test_db'; // Nom de la base de données
+    private $db_name = 'mvc'; // Nom de la base de données
     private $username = 'myuser'; // Utilisateur PostgreSQL
-    private $password = 'mypassword'; // Mot de passe PostgreSQL
+    private $password = 'hassan'; // Mot de passe PostgreSQL
     public $conn;
 
     public function getConnection()
