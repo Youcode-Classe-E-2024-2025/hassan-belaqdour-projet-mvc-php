@@ -1,18 +1,19 @@
 <?php
-// public/index.php
 
-require_once __DIR__ . '/../app/core/Router.php';
-require_once __DIR__ . '/../app/controllers/front/AuthController.php';
+require_once '../app/controllers/AuthController.php';
 
-session_start();
+$action = isset($_GET['action']) ? $_GET['action'] : '';
 
-$router = new Router();
+$authController = new AuthController();
 
-// Routes
-$router->addRoute('/login', 'AuthController', 'showLogin');
-$router->addRoute('/signup', 'AuthController', 'showSignup');
-$router->addRoute('/login', 'AuthController', 'login');
-$router->addRoute('/signup', 'AuthController', 'signup');
-
-$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$router->dispatch($path);
+switch ($action) {
+    case 'login':
+        $authController->login();
+        break;
+    case 'signup':
+        $authController->signup();
+        break;
+    default:
+        include '../app/views/login.php';
+        break;
+}
