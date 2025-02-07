@@ -6,12 +6,14 @@ require_once '../config/database.php';
 class AuthController
 {
     private $user;
+    private $twig;
 
-    public function __construct()
+    public function __construct($twig)
     {
         $database = new Database();
         $db = $database->getConnection();
         $this->user = new User($db);
+        $this->twig = $twig;
     }
 
     // Inscription
@@ -22,10 +24,12 @@ class AuthController
             $this->user->password = $_POST['password'];
 
             if ($this->user->signup()) {
-                echo "Inscription réussie !";
+                echo $this->twig->render('signup.twig', ['message' => 'Inscription réussie !']);
             } else {
-                echo "Erreur lors de l'inscription.";
+                echo $this->twig->render('signup.twig', ['message' => 'Erreur lors de l\'inscription.']);
             }
+        } else {
+            echo $this->twig->render('signup.twig');
         }
     }
 
@@ -37,10 +41,12 @@ class AuthController
             $this->user->password = $_POST['password'];
 
             if ($this->user->login()) {
-                echo "Connexion réussie ! Bienvenue, " . $this->user->username;
+                echo $this->twig->render('login.twig', ['message' => 'Connexion réussie ! Bienvenue, ' . $this->user->username]);
             } else {
-                echo "Identifiants incorrects.";
+                echo $this->twig->render('login.twig', ['message' => 'Identifiants incorrects.']);
             }
+        } else {
+            echo $this->twig->render('login.twig');
         }
     }
 }
